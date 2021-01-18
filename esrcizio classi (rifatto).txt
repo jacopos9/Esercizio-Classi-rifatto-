@@ -1,0 +1,185 @@
+// esercizio :: Implementare una gerarchia di classi per rappresentare una serie di ostacoli
+// ho provato ad usare in interfaccia in un modo diverso dal solito, questa interfaccia contiene delle proprietà (variabili e metodi) che i vari nemici ereditano e successivamente  questi valori vengono modificati per ogni classe
+// 
+
+
+namespace Obstacle
+{
+    class ObstacleMainClass
+    {
+        static void Main(string[] args)
+        {
+            //ESEMPIO PER VISUALIZZARE I VALORI
+
+            Bowser bowser = new Bowser();
+            bowser.TakeDamage();
+            bowser.Attack();
+            bowser.Movement();
+
+            Console.WriteLine(" ");
+
+            Goomba goomba = new Goomba();
+            goomba.TakeDamage();
+            goomba.Attack();
+            goomba.Movement();
+
+            Console.WriteLine(" ");
+
+            Martelkoopa martelkoopa = new Martelkoopa();
+            martelkoopa.TakeDamage();
+            martelkoopa.Attack();
+            martelkoopa.Movement();
+        }
+        public interface IEnemyProperty
+        {
+
+            float timeBetweenAttack { get; set; }
+            float speed { get; set; }
+            int health { get; set; }
+            int damageAttack { get; set; }
+
+            void Attack();
+            void TakeDamage();
+            void Die();
+            void Movement();
+        }
+        class Bowser : IEnemyProperty
+        {
+
+            private bool canAttack; // se può attaccare
+
+            public float timeBetweenAttack { get; set; }
+            public float speed { get; set; }
+            public int health { get; set; }
+            public int damageAttack { get; set; }
+
+            public void TakeDamage()
+            {
+                health--; // ipotizzando un possibile colpo ricevuto
+
+                if (health <= 0)
+                {
+                    Die();
+                }
+                Console.WriteLine("la vita di bowser è " + health);
+            }
+            public void Attack()
+            {
+                if (canAttack)
+                {
+                    damageAttack = 10;
+                }
+                Console.WriteLine("la forza attacco di bowser è " + damageAttack);
+            }
+            public void Die()
+            {
+                //animazione di morte ecc..
+            }
+            public void Movement()
+            {
+                Console.WriteLine("la velocità di bowser è " + speed);
+            }
+            public Bowser()
+            {
+                timeBetweenAttack = 3f;
+                speed = 3f;
+                health = 5;
+                damageAttack = 10;
+            }
+
+        }
+
+        class Goomba : IEnemyProperty
+        {
+            private bool canAttack;
+            public float timeBetweenAttack { get; set; }
+            public float speed { get; set; }
+            public int health { get; set; }
+            public int damageAttack { get; set; }
+
+            public void TakeDamage()
+            {
+                health--;
+
+                if (health >= 0)
+                {
+                    Die();
+                }
+                Console.WriteLine("la vita di goomba è " + health);
+            }
+            public void Attack()
+            {
+                if (canAttack)
+                {
+                    damageAttack = 3;
+                }
+                Console.WriteLine("la forza attacco di goomba è " + damageAttack);
+            }
+            public void Die()
+            {
+                //amimazione di morte ecc..
+            }
+            public void Movement()
+            {
+                Console.WriteLine("la velocità di goomba è " + speed);
+            }
+
+            public Goomba()
+            {
+                timeBetweenAttack = 1;
+                speed = 5f;
+                health = 2;
+                damageAttack = 3;
+            }
+        }
+
+        class Martelkoopa : IEnemyProperty
+        {
+            public float timeBetweenAttack { get; set; }
+            public float speed { get; set; }
+            public int health { get; set; }
+            public int damageAttack { get; set; }
+
+            private bool canAttack;
+
+            public void TakeDamage()
+            {
+                health--;
+
+                if (health >= 0)
+                {
+                    Die();
+                }
+                Console.WriteLine("la vita di MartelKoopa è " + health);
+            }
+            public void Attack()
+            {
+                if (canAttack)
+                {
+                    damageAttack = 6;
+                }
+                Console.WriteLine("la forza attacco di martelKoopa è " + damageAttack);
+            }
+            public void Die()
+            {
+                // animazione di morte ecc..
+            }
+            public void Movement()
+            {
+                Console.WriteLine("la velocità di Martelkoopa è " + speed);
+            }
+            public Martelkoopa()
+            {
+                timeBetweenAttack = 3.5f;
+                speed = 7f;
+                health = 7;
+                damageAttack = 6;
+            }
+
+        }
+        public class Ravine //burrone
+        {
+            //classe che non eredita da IEnemyProperty perchè possiede proprietà diverse
+        }
+    }
+}
